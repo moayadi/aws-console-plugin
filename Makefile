@@ -23,14 +23,20 @@ start:
 enable:
 	vault secrets enable -path=awsconsole awsconsole
 
-config: 
+config:
+	vault write awsconsole/config/root \
+	access_key=AKIAI44QH8DHBEXAMPLE \
+	secret_key=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY \
+	region=us-west-1
+
+role: 
 	vault write awsconsole/roles/network \
     role_arns=arn:aws:iam::578479370890:role/network-admin-role \
     credential_type=assumed_role console_login=true \
 	console_duration=1800
 
 creds:
-	vault write awsconsole/sts/network
+	vault write awsconsole/sts/network ttl=1h
 
 fmt:
 	go fmt $$(go list ./...)
