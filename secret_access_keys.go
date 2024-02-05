@@ -612,7 +612,7 @@ func genConsoleUrl(creds *sts.AssumeRoleOutput, sessionDuration string) (string,
 		SessionToken: *creds.Credentials.SessionToken,
 	}
 
-	jsonData, err := json.Marshal(fed)
+	jsonData, _ := json.Marshal(fed)
 
 	encoded := url.QueryEscape(string(jsonData))
 
